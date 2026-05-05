@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+button{
+    cursor: pointer;
+}
+
+body{
+    font-family: var(--font-plus-jakarta-sans);
+}
