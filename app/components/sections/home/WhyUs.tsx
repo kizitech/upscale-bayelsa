@@ -6,7 +6,7 @@ export default function WhyUs() {
   return (
     <>
       <section className="w-full flex">
-        <div className="max-w-7xl w-full flex flex-col gap-20 px-4 py-10 mx-auto ">
+        <div className="max-w-7xl w-full flex flex-col gap-20 px-4 mx-auto ">
           <div className="flex justify-between max-md:flex-col gap-4 md:items-end">
             <div className="flex gap-4 flex-col">
               <h2 className="capitalize text-green-950 md:text-5xl text-2xl font-medium ">

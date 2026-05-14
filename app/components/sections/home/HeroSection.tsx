@@ -2,8 +2,11 @@
 
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import CircularBadge from "../../CircularBadge";
+import { useState } from "react";
 
 export default function HeroSection() {
+  const [isChecked, setIsChecked] = useState(false);
+
   return (
     <>
       <section className="flex w-full relative  h-dvh">
@@ -24,10 +27,11 @@ export default function HeroSection() {
             </div>
             <div className="flex items-center justify-center md:-mt-6 -mt-2 text-6xl md:text-[10rem]">
               gr
-              <div className="bg-linear-90 cursor-pointer from-white to-90% to-green-950 flex items-center h-fit p-2 md:p-5 rounded-full md:w-48 w-24 md:mt-10 mt-5">
+              <div className="bg-linear-90 relative cursor-pointer from-white to-90% to-green-950 flex items-center h-fit p-2 md:p-5 rounded-full md:w-48 w-24 md:mt-10 mt-5">
                 <div className="bg-white rounded-full relative md:p-6 p-2 w-full">
-                  <div className="absolute  -left-1 md:-top-2 -top-1.5  md:h-16 md:w-16 h-7 w-7 bg-white rounded-full border border-black/10 shadow shadow-black/20 "></div>
+                  <div className={`absolute -left-1 md:-top-2 -top-1.5  md:h-16 md:w-16 h-7 w-7 bg-white rounded-full border border-black/10 shadow-md shadow-black/20 duration-1000 ease-in-out ${isChecked ? 'translate-x-0' : 'translate-x-24 rotate-180'}`}></div>
                 </div>
+                <input type="checkbox" name="" checked={isChecked} onChange={() => setIsChecked(!isChecked)} className="absolute opacity-0 inset-0" id="" />
               </div>
               wth
             </div>

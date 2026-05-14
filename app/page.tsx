@@ -8,10 +8,12 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <HeroSection />
+      <main className="flex flex-col gap-20 w-full ">
+        <HeroSection />
       <WhyUs/>
       <WhoAreWe />
       <OurService />
+      </main>
     </>
   );
 }

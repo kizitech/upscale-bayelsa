@@ -6,7 +6,7 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react";
 export default function OurService() {
   return (
     <section className="w-full flex">
-      <div className="max-w-7xl w-full flex flex-col md:items-center justify-center px-4 md:py-20 py-10 mx-auto">
+      <div className="max-w-7xl w-full flex flex-col md:items-center justify-center px-4 mx-auto">
         <h1 className="capitalize md:text-5xl text-3xl mt-4 font-medium">
           The <span className="text-green-950">services</span> we offer
         </h1>

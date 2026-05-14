@@ -12,7 +12,7 @@ export default function WhoAreWe() {
 
   return (
     <section className="w-full flex">
-      <div className="max-w-7xl w-full max-md:flex-col flex rounded-xl items-start justify-center gap-10 px-4 md:py-20 py-10 mx-auto">
+      <div className="max-w-7xl w-full max-md:flex-col flex rounded-xl items-start  gap-10 px-4 mx-auto">
         
         {/* LEFT SIDE */}
         <div className="flex flex-col overflow-hidden gap-4 bg-black/10 md:pt-6 md:px-6 pt-4 px-4 rounded-3xl">
@@ -53,7 +53,7 @@ export default function WhoAreWe() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="flex flex-1 gap-8 py-6 flex-col">
+        <div className="flex max-w-120 flex-1 gap-8 py-6 flex-col">
           
           <h1 className="capitalize md:text-3xl text-xl font-medium transition-all duration-300">
             {activeItem.title}
