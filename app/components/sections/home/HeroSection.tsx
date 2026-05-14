@@ -8,7 +8,7 @@ export default function HeroSection() {
     <>
       <section className="flex w-full relative  h-dvh">
         <div className=" bg-[url('/grid-layout.png')] opacity-5 bg-contain absolute top-0 left-0 w-full h-full z-10"></div>
-        <div className="flex flex-col items-center justify-center relative z-20 w-full h-full">
+        <div className="flex flex-col items-center justify-center relative z-20 px-4 w-full h-full">
           <p className="uppercase text-black/60 md:text-sm text-xs font-medium ">
             Consulting, Programming & design
           </p>

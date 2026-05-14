@@ -7,12 +7,12 @@ export default function WhyUs() {
     <>
       <section className="w-full flex">
         <div className="max-w-7xl w-full flex flex-col gap-20 px-4 py-10 mx-auto ">
-          <div className="flex justify-between max-md:flex-col gap-10 items-end">
+          <div className="flex justify-between max-md:flex-col gap-4 md:items-end">
             <div className="flex gap-4 flex-col">
-              <h2 className="capitalize text-green-950 text-5xl font-medium ">
+              <h2 className="capitalize text-green-950 md:text-5xl text-2xl font-medium ">
                 Why choose us?
               </h2>
-              <p className="text-lg bg-red font-medium max-w-3xl text-black/60 w-full">
+              <p className="md:text-lg text-sm bg-red font-medium max-w-3xl text-black/60 w-full">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                 Praesentium error expedita impedit aut facilis. Nesciunt
                 mollitia praesentium molestiae blanditiis suscipit, unde quod
@@ -20,7 +20,7 @@ export default function WhyUs() {
               </p>
             </div>
 
-            <button className="px-6 py-2 font-medium text-white bg-green-950 rounded-lg shrink-0 h-fit">
+            <button className="px-6 py-2 font-medium text-white w-fit bg-green-950 rounded-lg shrink-0 h-fit">
               Get Started
             </button>
           </div>
@@ -34,9 +34,9 @@ export default function WhyUs() {
                   key={item.id}
                   className="flex flex-col cursor-pointer justify-between gap-4 rounded-lg text-green-950 group hover:bg-green-950 hover:text-white bg-green-100 md:p-6 p-4 ease-in-out duration-500 delay-100"
                 >
-                  <Icon size={40} />
+                  <Icon size={40} className="max-md:size-8" />
 
-                  <h3 className="text-4xl">{item.title}</h3>
+                  <h3 className="md:text-4xl text-3xl">{item.title}</h3>
 
                   <p className="font-medium">{item.description}</p>
 

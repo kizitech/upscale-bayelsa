@@ -4,7 +4,7 @@ import { ArrowDownLeftIcon } from "@phosphor-icons/react";
 
 export default function CircularBadge() {
   return (
-    <div className="flex group items-center hover:rotate-185 ease-in-out duration-1000 cursor-pointer z-30 absolute bottom-10 right-10 justify-center ">
+    <div className="flex group items-center hover:rotate-185 ease-in-out duration-1000 cursor-pointer z-30 absolute md:bottom-10 bottom-0 right-0 md:right-10 justify-center ">
       <div className="relative group-hover:scale-100 scale-60 w-40 h-40 ease-in-out duration-1000">
         {/* SVG circular text */}
         <svg
