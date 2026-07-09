@@ -5,11 +5,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 
 import "swiper/css";
-import "swiper/css/pagination";
 
 import { serviceCards, statsData } from "@/data/service-data";
 
@@ -20,8 +18,11 @@ function useIsMobile(breakpoint = 768) {
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < breakpoint);
+
     check();
+
     window.addEventListener("resize", check);
+
     return () => window.removeEventListener("resize", check);
   }, [breakpoint]);
 
@@ -34,10 +35,10 @@ function ServiceCard({ card }: { card: (typeof serviceCards)[number] }) {
       className={`
         relative
         w-full
-        rounded-4xl
+        rounded-[32px]
         overflow-hidden
+        p-5
         md:p-8
-        p-4
         flex
         flex-col
         gap-10
@@ -47,7 +48,7 @@ function ServiceCard({ card }: { card: (typeof serviceCards)[number] }) {
       <div className={`w-full h-40 rounded-xl ${card.cardColor}`} />
 
       <div className="flex justify-between items-center">
-        <h3 className={`text-2xl font-medium max-w-20 ${card.textColor}`}>
+        <h3 className={`text-2xl font-medium max-w-24 ${card.textColor}`}>
           {card.title}
         </h3>
 
@@ -74,7 +75,9 @@ export default function OurService() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const swiperRef = useRef<SwiperType | null>(null);
+
   const isMobile = useIsMobile();
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   const arc = useMemo(() => {
@@ -95,12 +98,11 @@ export default function OurService() {
   }, []);
 
   useEffect(() => {
-    // Only run the fan/arc scroll animation on desktop
     if (isMobile) return;
 
     const ctx = gsap.context(() => {
       const cards = cardsRef.current.filter(
-        (card): card is HTMLDivElement => card !== null
+        (card): card is HTMLDivElement => card !== null,
       );
 
       cards.forEach((card, index) => {
@@ -134,7 +136,7 @@ export default function OurService() {
               end: "top 35%",
               scrub: 1.2,
             },
-          }
+          },
         );
       });
     }, sectionRef);
@@ -143,8 +145,8 @@ export default function OurService() {
   }, [arc, isMobile]);
 
   return (
-    <section ref={sectionRef} className="w-full py-20">
-      <div className="max-w-7xl w-full mx-auto px-4 flex flex-col items-center">
+    <section ref={sectionRef} className="max-w-screen overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
         <h1 className="text-3xl md:text-5xl font-medium capitalize">
           The <span className="text-green-950">services</span> we offer
         </h1>
@@ -155,20 +157,17 @@ export default function OurService() {
           corrupti.
         </p>
 
-        {/* Cards: swiper on mobile, arc animation on desktop */}
         <div className="w-full mt-20">
           {isMobile ? (
             <>
               <Swiper
-                modules={[Pagination]}
-                spaceBetween={20}
                 slidesPerView={1.15}
                 centeredSlides
+                spaceBetween={20}
                 onSwiper={(swiper) => {
                   swiperRef.current = swiper;
                 }}
                 onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-                className="w-full"
               >
                 {serviceCards.map((card, index) => (
                   <SwiperSlide key={index}>
@@ -177,32 +176,31 @@ export default function OurService() {
                 ))}
               </Swiper>
 
-              {/* Custom pagination buttons */}
-              <div className="flex justify-center items-center gap-2 mt-6">
-                {serviceCards.map((_, index) => (
-                  <button
-                    key={index}
-                    aria-label={`Go to slide ${index + 1}`}
-                    onClick={() => swiperRef.current?.slideTo(index)}
-                    className={`
-                      h-2.5
-                      rounded-full
-                      transition-all
-                      duration-300
-                      ease-in-out
-                      ${
-                        activeIndex === index
-                          ? "w-8 bg-green-950"
-                          : "w-2.5 bg-black/20"
-                      }
-                    `}
-                  />
-                ))}
+              {/* Custom Pagination */}
+              <div className="flex justify-center items-center gap-3 mt-8">
+                {serviceCards.map((card, index) => {
+                  const active = activeIndex === index;
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => swiperRef.current?.slideTo(index)}
+                      aria-label={`Go to slide ${index + 1}`}
+                      className="h-2.5 rounded-full transition-all duration-300"
+                      style={{
+                        width: active ? 42 : 10,
+                        backgroundColor: active ? card.themeColor : "#D1D5DB",
+                      }}
+                    />
+                  );
+                })}
               </div>
+
+             
             </>
           ) : (
             <div
-              className="flex justify-center items-end gap-8 overflow-visible"
+              className="flex justify-center items-end gap-8"
               style={{ perspective: "1500px" }}
             >
               {serviceCards.map((card, index) => (
@@ -219,17 +217,16 @@ export default function OurService() {
                     relative
                     w-[18rem]
                     shrink-0
-                    rounded-4xl
-                    hover:-translate-y-4!
+                    rounded-[32px]
                     overflow-hidden
-                    transition-all
-                    duration-300
-                    ease-in-out
                     cursor-pointer
                     p-8
                     flex
                     flex-col
                     gap-10
+                    transition-transform
+                    duration-300
+                    hover:-translate-y-4
                     ${card.bgColor}
                   `}
                 >
@@ -237,7 +234,7 @@ export default function OurService() {
 
                   <div className="flex justify-between items-center">
                     <h3
-                      className={`text-2xl font-medium max-w-20 ${card.textColor}`}
+                      className={`text-2xl font-medium max-w-24 ${card.textColor}`}
                     >
                       {card.title}
                     </h3>
@@ -256,6 +253,7 @@ export default function OurService() {
                   </div>
 
                   <div className="absolute top-20 right-2">{card.path}</div>
+
                   <div className="absolute -top-4 -left-4">{card.path}</div>
                 </div>
               ))}
@@ -263,13 +261,9 @@ export default function OurService() {
           )}
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-20 w-full max-w-4xl mt-20">
           {statsData.map((stat, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center text-center"
-            >
+            <div key={index} className="flex flex-col items-center text-center">
               <h2 className="text-2xl md:text-4xl font-bold text-green-950">
                 {stat.value}
               </h2>

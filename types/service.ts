@@ -5,6 +5,7 @@ export interface ServiceCardType {
   textColor: string;
   buttonColor: string;
   buttonTextColor: string;
+  themeColor: string;
   path: React.ReactNode;
 }
 

@@ -11,6 +11,7 @@ export const serviceCards: ServiceCardType[] = [
     textColor: "text-[#1F1300]",
     buttonColor: "bg-[#1F1300]",
     buttonTextColor: "text-white",
+    themeColor: "#1F1300",
     path: <Path1 />,
   },
 
@@ -21,6 +22,7 @@ export const serviceCards: ServiceCardType[] = [
     textColor: "text-green-950",
     buttonColor: "bg-green-950",
     buttonTextColor: "text-white",
+    themeColor: "#052E16", // Tailwind green-950
     path: <Path2 />,
   },
 
@@ -31,6 +33,7 @@ export const serviceCards: ServiceCardType[] = [
     textColor: "text-white",
     buttonColor: "bg-lime-400",
     buttonTextColor: "text-green-950",
+    themeColor: "#A3E635", // Tailwind lime-400
     path: <Path4 />,
   },
 ];
@@ -40,17 +43,14 @@ export const statsData: StatType[] = [
     value: "123",
     label: "Lorem, ipsum dolor.",
   },
-
   {
     value: "123",
     label: "Lorem, ipsum dolor.",
   },
-
   {
     value: "123",
     label: "Lorem, ipsum dolor.",
   },
-
   {
     value: "123",
     label: "Lorem, ipsum dolor.",

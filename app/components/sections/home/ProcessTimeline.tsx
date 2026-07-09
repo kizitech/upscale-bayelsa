@@ -139,7 +139,7 @@ export default function ProcessTimeline() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden px-6 pb-20 sm:pb-10 lg:px-16"
+      className="relative overflow-hidden px-6  sm:pb-10 lg:px-16"
     >
       {/* Ambient background circle */}
       <div
