@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import WhyUs from "./components/sections/home/WhyUs";
 import OurService from "./components/sections/home/OurService";
 import WhoAreWe from "./components/sections/home/WhoAreWe";
+import ProcessTimeline from "./components/sections/home/ProcessTimeline";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <WhyUs/>
       <WhoAreWe />
       <OurService />
+      <ProcessTimeline/>
       </main>
     </>
   );
