@@ -3,11 +3,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRightIcon } from "@phosphor-icons/react";
+
+import {
+  ArrowUpRightIcon,
+  CaretLeftIcon,
+  CaretRightIcon,
+} from "@phosphor-icons/react";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 
+import { Navigation } from "swiper/modules";
+
 import "swiper/css";
+import "swiper/css/navigation";
 
 import { serviceCards, statsData } from "@/data/service-data";
 
@@ -29,34 +38,65 @@ function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-function ServiceCard({ card }: { card: (typeof serviceCards)[number] }) {
+interface ServiceCardProps {
+  card: (typeof serviceCards)[number];
+}
+
+function ServiceCard({ card }: ServiceCardProps) {
   return (
     <div
       className={`
         relative
         w-full
-        rounded-[32px]
+        min-h-[380px]
+        rounded-[30px]
         overflow-hidden
         p-5
-        md:p-8
+        sm:p-6
+        lg:p-8
         flex
         flex-col
-        gap-10
+        justify-between
+        transition-all
+        duration-500
         ${card.bgColor}
       `}
     >
-      <div className={`w-full h-40 rounded-xl ${card.cardColor}`} />
+      <div
+        className={`
+          w-full
+          h-44
+          sm:h-52
+          rounded-2xl
+          ${card.cardColor}
+        `}
+      />
 
-      <div className="flex justify-between items-center">
-        <h3 className={`text-2xl font-medium max-w-24 ${card.textColor}`}>
+      <div className="flex justify-between items-center mt-10">
+        <h3
+          className={`
+            text-2xl
+            font-medium
+            max-w-[140px]
+            leading-tight
+            ${card.textColor}
+          `}
+        >
           {card.title}
         </h3>
 
         <button
           className={`
-            p-2
-            rounded-lg
+            h-12
+            w-12
+            rounded-xl
+            flex
+            items-center
+            justify-center
             shrink-0
+            transition-transform
+            duration-300
+            hover:rotate-45
             ${card.buttonColor}
             ${card.buttonTextColor}
           `}
@@ -65,16 +105,27 @@ function ServiceCard({ card }: { card: (typeof serviceCards)[number] }) {
         </button>
       </div>
 
-      <div className="absolute top-20 right-2">{card.path}</div>
-      <div className="absolute -top-4 -left-4">{card.path}</div>
+      <div className="absolute top-16 right-2 pointer-events-none">
+        {card.path}
+      </div>
+
+      <div className="absolute -top-4 -left-4 pointer-events-none">
+        {card.path}
+      </div>
     </div>
   );
 }
 
 export default function OurService() {
   const sectionRef = useRef<HTMLDivElement>(null);
+
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
   const swiperRef = useRef<SwiperType | null>(null);
+
+  const prevRef = useRef<HTMLButtonElement>(null);
+
+  const nextRef = useRef<HTMLButtonElement>(null);
 
   const isMobile = useIsMobile();
 
@@ -88,10 +139,10 @@ export default function OurService() {
       const distance = index - center;
 
       return {
-        x: distance * 10,
-        y: Math.abs(distance) * 35,
-        rotation: distance * 7,
-        scale: 1 - Math.abs(distance) * 0.03,
+        x: distance * 14,
+        y: Math.abs(distance) * 38,
+        rotation: distance * 8,
+        scale: 1 - Math.abs(distance) * 0.04,
         zIndex: count - Math.abs(distance),
       };
     });
@@ -110,14 +161,12 @@ export default function OurService() {
           card,
           {
             opacity: 0,
-            y: 250,
-            scale: 0.6,
-            rotateY: -40,
-            rotateX: 35,
-            rotation: 0,
+            y: 220,
+            scale: 0.65,
+            rotateY: -35,
+            rotateX: 20,
             filter: "blur(10px)",
-            transformPerspective: 1000,
-            transformOrigin: "center center",
+            transformPerspective: 1200,
           },
           {
             opacity: 1,
@@ -128,8 +177,8 @@ export default function OurService() {
             rotateY: 0,
             rotateX: 0,
             filter: "blur(0px)",
-            duration: 1.5,
             ease: "power4.out",
+            duration: 1.5,
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top 75%",
@@ -145,29 +194,44 @@ export default function OurService() {
   }, [arc, isMobile]);
 
   return (
-    <section ref={sectionRef} className="max-w-screen overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
-        <h1 className="text-3xl md:text-5xl font-medium capitalize">
-          The <span className="text-green-950">services</span> we offer
-        </h1>
+    <section ref={sectionRef} className="overflow-hidden py-24">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="text-3xl font-medium md:text-5xl">
+            The <span className="text-green-950">services</span> we offer
+          </h1>
 
-        <p className="max-w-3xl mt-4 md:text-center text-black/70 text-sm">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus at
-          illo veniam ipsam quasi sequi laboriosam esse voluptas molestiae
-          corrupti.
-        </p>
+          <p className="mt-5 text-sm leading-7 text-black/70 md:text-base">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus at
+            illo veniam ipsam quasi sequi laboriosam esse voluptas molestiae
+            corrupti.
+          </p>
+        </div>
 
-        <div className="w-full mt-20">
+        <div className="mt-20">
           {isMobile ? (
-            <>
+            <div className="relative">
               <Swiper
-                slidesPerView={1.15}
+                modules={[Navigation]}
                 centeredSlides
                 spaceBetween={20}
+                breakpoints={{
+                  0: {
+                    slidesPerView: 1.05,
+                  },
+                  480: {
+                    slidesPerView: 1.15,
+                  },
+                  640: {
+                    slidesPerView: 1.3,
+                  },
+                }}
                 onSwiper={(swiper) => {
                   swiperRef.current = swiper;
                 }}
-                onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+                onSlideChange={(swiper) => {
+                  setActiveIndex(swiper.realIndex);
+                }}
               >
                 {serviceCards.map((card, index) => (
                   <SwiperSlide key={index}>
@@ -176,32 +240,54 @@ export default function OurService() {
                 ))}
               </Swiper>
 
-              {/* Custom Pagination */}
-              <div className="flex justify-center items-center gap-3 mt-8">
+              <button
+                onClick={() => swiperRef.current?.slidePrev()}
+                className="absolute left-2 top-1/2 z-20 ..."
+              >
+                <CaretLeftIcon size={22} weight="bold" />
+              </button>
+
+              <button
+                onClick={() => swiperRef.current?.slideNext()}
+                className="absolute right-2 top-1/2 z-20 ..."
+              >
+                <CaretRightIcon size={22} weight="bold" />
+              </button>
+
+              {/* Pagination */}
+              <div className="mt-8 flex justify-center gap-3">
                 {serviceCards.map((card, index) => {
                   const active = activeIndex === index;
 
                   return (
                     <button
                       key={index}
-                      onClick={() => swiperRef.current?.slideTo(index)}
                       aria-label={`Go to slide ${index + 1}`}
+                      onClick={() => swiperRef.current?.slideTo(index)}
                       className="h-2.5 rounded-full transition-all duration-300"
                       style={{
-                        width: active ? 42 : 10,
-                        backgroundColor: active ? card.themeColor : "#D1D5DB",
+                        width: active ? 40 : 10,
+                        backgroundColor: active ? card.themeColor : "#d1d5db",
                       }}
                     />
                   );
                 })}
               </div>
-
-             
-            </>
+            </div>
           ) : (
             <div
-              className="flex justify-center items-end gap-8"
-              style={{ perspective: "1500px" }}
+              className="
+                flex
+                items-end
+                justify-center
+                gap-4
+                px-4
+                lg:gap-6
+                xl:gap-8
+              "
+              style={{
+                perspective: "1500px",
+              }}
             >
               {serviceCards.map((card, index) => (
                 <div
@@ -213,62 +299,44 @@ export default function OurService() {
                     zIndex: arc[index].zIndex,
                     transformStyle: "preserve-3d",
                   }}
-                  className={`
-                    relative
-                    w-[18rem]
+                  className="
+                    w-[17rem]
                     shrink-0
-                    rounded-[32px]
-                    overflow-hidden
-                    cursor-pointer
-                    p-8
-                    flex
-                    flex-col
-                    gap-10
-                    transition-transform
-                    duration-300
-                    hover:-translate-y-4
-                    ${card.bgColor}
-                  `}
+                    transition-all
+                    duration-500
+                    hover:-translate-y-5
+                    hover:scale-105
+                    lg:w-[18rem]
+                    xl:w-[19rem]
+                  "
                 >
-                  <div className={`w-full h-40 rounded-xl ${card.cardColor}`} />
-
-                  <div className="flex justify-between items-center">
-                    <h3
-                      className={`text-2xl font-medium max-w-24 ${card.textColor}`}
-                    >
-                      {card.title}
-                    </h3>
-
-                    <button
-                      className={`
-                        p-2
-                        rounded-lg
-                        shrink-0
-                        ${card.buttonColor}
-                        ${card.buttonTextColor}
-                      `}
-                    >
-                      <ArrowUpRightIcon size={22} />
-                    </button>
-                  </div>
-
-                  <div className="absolute top-20 right-2">{card.path}</div>
-
-                  <div className="absolute -top-4 -left-4">{card.path}</div>
+                  <ServiceCard card={card} />
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-20 w-full max-w-4xl mt-20">
+        {/* Statistics */}
+        <div
+          className="
+            mx-auto
+            mt-20
+            grid
+            max-w-5xl
+            grid-cols-2
+            gap-x-6
+            gap-y-10
+            lg:grid-cols-4
+          "
+        >
           {statsData.map((stat, index) => (
-            <div key={index} className="flex flex-col items-center text-center">
-              <h2 className="text-2xl md:text-4xl font-bold text-green-950">
+            <div key={index} className="text-center">
+              <h2 className="text-3xl font-bold text-green-950 md:text-4xl">
                 {stat.value}
               </h2>
 
-              <p className="text-black/70 capitalize max-md:text-xs">
+              <p className="mt-2 text-xs capitalize text-black/70 md:text-sm">
                 {stat.label}
               </p>
             </div>

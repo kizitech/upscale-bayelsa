@@ -60,7 +60,7 @@ export default function Pricing() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full ">
+    <section ref={sectionRef} id="pricing" className="w-full ">
       <div className="max-w-7xl w-full mx-auto px-4 flex flex-col items-center">
         <div
           ref={headingRef}

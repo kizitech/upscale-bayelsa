@@ -4,6 +4,10 @@ button{
     cursor: pointer;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body{
     font-family: var(--font-plus-jakarta-sans);
 }
@@ -52,4 +56,13 @@ body{
 .hamburger input:checked + svg .line-top-bottom {
   stroke-dasharray: 20 300;
   stroke-dashoffset: -32.42;
+}
+
+
+.grid-bg {
+  background-color: #fff;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.10) 1px, transparent 1px);
+  background-size: 40px 40px;
 }

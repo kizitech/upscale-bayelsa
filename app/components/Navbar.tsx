@@ -22,6 +22,20 @@ export default function Navbar() {
   const [hash, setHash] = useState("");
   const pathname = usePathname();
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 80);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // Returns true when the current path matches the link's href.
   // Hash-only links (#, #pricing) only match on the home page ("/").
   useEffect(() => {
@@ -63,9 +77,41 @@ export default function Navbar() {
 
       <header className="relative">
         <nav
-          className={`flex items-center justify-between max-w-7xl w-full absolute z-100 top-0 left-0 right-0 mx-auto py-6 md:px-12 px-6 transition-all duration-300
-          ${isOpen ? "bg-white" : ""}
-          `}
+          className={`
+    flex items-center justify-between
+    left-1/2 -translate-x-1/2
+    transition-all duration-500 ease-out
+    z-100
+    ${
+      scrolled
+        ? `
+          fixed
+          top-5
+          md:max-w-5xl
+          w-[94%]
+          md:w-[calc(100%-2rem)]
+          rounded-2xl
+          bg-white/10
+          backdrop-blur-2xl
+          shadow-2xl
+          py-4
+          md:px-8
+          px-2
+        `
+        : `
+          absolute
+          top-0
+          max-w-7xl
+          w-full
+          py-6
+          md:px-12
+          px-6
+          bg-transparent
+        `
+    }
+
+    ${isOpen && !scrolled ? "bg-white" : ""}
+  `}
         >
           {/* Desktop Nav */}
           <ul className="flex gap-8 items-center max-md:hidden">
@@ -120,8 +166,20 @@ export default function Navbar() {
           </ul>
 
           {/* Logo */}
-          <div className="md:h-20 md:w-87.5 w-52 h-10 overflow-hidden flex items-center justify-center">
-            <Image src="/wordmark.png" alt="Upscale" width={700} height={300} />
+          <div
+            className={`
+    overflow-hidden flex items-center justify-center transition-all duration-500
+
+    ${scrolled ? "w-40 h-14" : "w-64 h-24 max-md:w-32 max-md:h-12"}
+  `}
+          >
+            <Image
+              src="/wordmark.png"
+              alt="Upscale"
+              width={700}
+              height={300}
+              className={`object-cover ${scrolled ? "max-md:h-30 h-30 max-md:w-50! w-100" : "max-md:h-30 h-60 max-md:w-50! w-100"}`}
+            />
           </div>
 
           {/* Desktop CTA */}

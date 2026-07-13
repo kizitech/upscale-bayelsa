@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,23 +47,27 @@ export default function CTASection() {
       <div className="max-w-7xl w-full mx-auto px-4">
         <div
           ref={bannerRef}
-          className="relative overflow-hidden rounded-4xl bg-green-950 px-6 py-16 md:px-20 md:py-24 flex flex-col items-center text-center"
+          className="relative overflow-hidden rounded-4xl bg-green-950 px-4 py-10 md:px-20 md:py-24 flex flex-col items-center text-center"
         >
           <div
             aria-hidden
-            className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-white/5"
-          />
+            className="pointer-events-none absolute left-0 md:top-0 top-10 opacity-10 md:opacity-20"
+          >
+            <Image src={`/squigle.png`} alt='#' width={3000} height={2500} className=" md:rotate-120 scale-150 h-full w-full object-contain scale-100" />
+          </div>
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-20 -bottom-32 h-80 w-80 rounded-full bg-white/5"
-          />
+            className="pointer-events-none absolute -right-50 -top-50 opacity-0 md:opacity-20"
+          >
+            <Image src={`/squigle.png`} alt='#' width={3000} height={2500} className=" -rotate-10 scale-150 h-full w-full object-contain scale-100" />
+          </div>
 
-          <div ref={contentRef} className="relative z-10 flex flex-col items-center gap-6 max-w-2xl">
+          <div ref={contentRef} className="relative z-10 flex flex-col items-center gap-4 max-w-2xl">
             <p className="uppercase text-white/70 text-sm font-medium tracking-widest">
               Let&apos;s get you found
             </p>
 
-            <h2 className="capitalize text-3xl md:text-5xl font-medium text-white leading-tight">
+            <h2 className="capitalize text-2xl md:text-5xl font-medium text-white leading-tight">
               Your next customer is already searching for you
             </h2>
 

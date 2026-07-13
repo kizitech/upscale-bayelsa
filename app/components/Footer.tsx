@@ -11,6 +11,8 @@ import {
   XLogoIcon,
   EnvelopeSimpleIcon,
 } from "@phosphor-icons/react";
+import Image from "next/image";
+import UpscaleLogoWithText from "@/public/UpscaleLogoWithText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,7 +24,13 @@ const serviceLinks = [
   "Google Maps Listings",
 ];
 
-const companyLinks = ["About Us", "Our Work", "Pricing", "FAQ", "Contact"];
+const companyLinks = [
+  { title: "About Us", url: "#about-us" },
+  { title: "Our Work", url: "#" },
+  { title: "Pricing", url: "#pricing" },
+  { title: "FAQ", url: "#faq" },
+  {title: "Contact", url:"#"},
+];
 
 const socialLinks = [
   { icon: InstagramLogoIcon, label: "Instagram" },
@@ -54,11 +62,20 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="w-full px-4 pb-4">
+    <footer className="w-full md:px-4 md:pb-4">
       <div
         ref={footerRef}
-        className="max-w-7xl w-full mx-auto rounded-4xl bg-green-950 text-white px-6 py-14 md:px-14 md:py-16 flex flex-col gap-14"
+        className="md:max-w-7xl w-full relative mx-auto overflow-hidden md:rounded-4xl bg-green-950 text-white px-6 py-14 md:px-14 md:py-16 flex flex-col gap-14"
       >
+        <div className="absolute bottom-0 right-0 ">
+          <Image
+            src="/ellispe.webp"
+            alt="#"
+            height={800}
+            width={800}
+            className=""
+          ></Image>
+        </div>
         {/* Top: brand + newsletter */}
         <div className="flex max-lg:flex-col justify-between gap-10 lg:items-end">
           <div className="flex flex-col gap-4 max-w-md">
@@ -73,20 +90,25 @@ export default function Footer() {
 
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex w-full max-w-md items-center gap-2 rounded-lg bg-white/10 p-1.5"
+            className="flex max-md:flex-col max-md:w-full max-w-md items-center gap-2 rounded-lg bg-white/10 p-1.5"
           >
-            <EnvelopeSimpleIcon size={20} className="ml-3 text-white/50 shrink-0" />
-            <input
-              type="email"
-              required
-              placeholder="you@business.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-transparent text-sm text-white placeholder:text-white/40 outline-none py-2"
-            />
+            <div className="flex gap-4 max-md:w-full items-center">
+              <EnvelopeSimpleIcon
+                size={20}
+                className="ml-3 text-white/70 shrink-0"
+              />
+              <input
+                type="email"
+                required
+                placeholder="you@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-transparent text-sm text-white placeholder:text-white/60 outline-none py-2"
+              />
+            </div>
             <button
               type="submit"
-              className="shrink-0 flex items-center gap-1 rounded-md bg-white text-green-950 px-4 py-2.5 text-sm font-medium transition-transform duration-200 hover:scale-[1.03] active:scale-95"
+              className="shrink-0 max-md:w-full justify-center flex items-center gap-1 rounded-md bg-white text-green-950 px-4 py-2.5 text-sm font-medium transition-transform duration-200 hover:scale-[1.03] active:scale-95"
             >
               Subscribe
               <ArrowUpRightIcon size={16} />
@@ -97,7 +119,20 @@ export default function Footer() {
         {/* Middle: link columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 border-t border-white/10 pt-12">
           <div className="flex flex-col gap-4 col-span-2 md:col-span-1">
-            <span className="text-xl font-semibold">YourBrand</span>
+            <div className="flex items-center ">
+              <div className="h-20 w-20 overflow-hidden flex items-center justify-center">
+                <Image
+                  src="/logo.svg"
+                  alt="Upscale"
+                  width={2000}
+                  height={800}
+                  className=" h-30 w-50 object-cover"
+                />
+              </div>
+              <h1 className="text-2xl md:text-4xl font-semibold capitalize text-white">
+                Upscale
+              </h1>
+            </div>
             <p className="text-white/60 text-sm leading-relaxed max-w-xs">
               We build the websites, socials, and search presence that help
               growing businesses get found.
@@ -123,13 +158,13 @@ export default function Footer() {
             <p className="text-xs uppercase tracking-widest text-white/40 font-medium">
               Company
             </p>
-            {companyLinks.map((link) => (
+            {companyLinks.map((link, i) => (
               <a
-                key={link}
-                href="#"
+                key={i}
+                href={link.url}
                 className="text-sm text-white/70 hover:text-white transition-colors duration-200 w-fit"
               >
-                {link}
+                {link.title}
               </a>
             ))}
           </div>
@@ -150,14 +185,14 @@ export default function Footer() {
             >
               +234 000 000 0000
             </a>
-            <p className="text-sm text-white/70">Lagos, Nigeria</p>
+            <p className="text-sm text-white/70">Bayelsa, Nigeria</p>
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="flex max-md:flex-col-reverse gap-6 justify-between items-center border-t border-white/10 pt-8">
           <p className="text-xs text-white/40">
-            © {new Date().getFullYear()} YourBrand. All rights reserved.
+            © {new Date().getFullYear()} Upscale. All rights reserved.
           </p>
 
           <div className="flex items-center gap-3">
