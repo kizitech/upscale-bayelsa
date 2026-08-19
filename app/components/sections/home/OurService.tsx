@@ -1,102 +1,348 @@
 "use client";
 
-import Path1 from "@/public/path1";
-import Path2 from "@/public/path2";
-import Path4 from "@/public/path4";
-import { ArrowUpRightIcon } from "@phosphor-icons/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import {
+  ArrowUpRightIcon,
+  CaretLeftIcon,
+  CaretRightIcon,
+} from "@phosphor-icons/react";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperType } from "swiper";
+
+import { Navigation } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+
+import { serviceCards, statsData } from "@/data/service-data";
+
+gsap.registerPlugin(ScrollTrigger);
+
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < breakpoint);
+
+    check();
+
+    window.addEventListener("resize", check);
+
+    return () => window.removeEventListener("resize", check);
+  }, [breakpoint]);
+
+  return isMobile;
+}
+
+interface ServiceCardProps {
+  card: (typeof serviceCards)[number];
+}
+
+function ServiceCard({ card }: ServiceCardProps) {
+  return (
+    <div
+      className={`
+        relative
+        w-full
+        min-h-[380px]
+        rounded-[30px]
+        overflow-hidden
+        p-5
+        sm:p-6
+        lg:p-8
+        flex
+        flex-col
+        justify-between
+        transition-all
+        duration-500
+        ${card.bgColor}
+      `}
+    >
+      <div
+        className={`
+          w-full
+          h-44
+          sm:h-52
+          rounded-2xl
+          ${card.cardColor}
+        `}
+      />
+
+      <div className="flex justify-between items-center mt-10">
+        <h3
+          className={`
+            text-2xl
+            font-medium
+            max-w-[140px]
+            leading-tight
+            ${card.textColor}
+          `}
+        >
+          {card.title}
+        </h3>
+
+        <button
+          className={`
+            h-12
+            w-12
+            rounded-xl
+            flex
+            items-center
+            justify-center
+            shrink-0
+            transition-transform
+            duration-300
+            hover:rotate-45
+            ${card.buttonColor}
+            ${card.buttonTextColor}
+          `}
+        >
+          <ArrowUpRightIcon size={22} />
+        </button>
+      </div>
+
+      <div className="absolute top-16 right-2 pointer-events-none">
+        {card.path}
+      </div>
+
+      <div className="absolute -top-4 -left-4 pointer-events-none">
+        {card.path}
+      </div>
+    </div>
+  );
+}
 
 export default function OurService() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  const swiperRef = useRef<SwiperType | null>(null);
+
+  const prevRef = useRef<HTMLButtonElement>(null);
+
+  const nextRef = useRef<HTMLButtonElement>(null);
+
+  const isMobile = useIsMobile();
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const arc = useMemo(() => {
+    const count = serviceCards.length;
+    const center = (count - 1) / 2;
+
+    return serviceCards.map((_, index) => {
+      const distance = index - center;
+
+      return {
+        x: distance * 14,
+        y: Math.abs(distance) * 38,
+        rotation: distance * 8,
+        scale: 1 - Math.abs(distance) * 0.04,
+        zIndex: count - Math.abs(distance),
+      };
+    });
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
+    const ctx = gsap.context(() => {
+      const cards = cardsRef.current.filter(
+        (card): card is HTMLDivElement => card !== null,
+      );
+
+      cards.forEach((card, index) => {
+        gsap.fromTo(
+          card,
+          {
+            opacity: 0,
+            y: 220,
+            scale: 0.65,
+            rotateY: -35,
+            rotateX: 20,
+            filter: "blur(10px)",
+            transformPerspective: 1200,
+          },
+          {
+            opacity: 1,
+            x: arc[index].x,
+            y: arc[index].y,
+            rotation: arc[index].rotation,
+            scale: arc[index].scale,
+            rotateY: 0,
+            rotateX: 0,
+            filter: "blur(0px)",
+            ease: "power4.out",
+            duration: 1.5,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 75%",
+              end: "top 35%",
+              scrub: 1.2,
+            },
+          },
+        );
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [arc, isMobile]);
+
   return (
-    <>
-      <section className="w-full flex">
-        <div className="max-w-7xl w-full flex flex-col items-center justify-center  px-4 md:py-20 py-10 mx-auto ">
-          <h1 className="capitalize md:text-5xl text-3xl mt-4 font-medium">
+    <section ref={sectionRef} className="overflow-hidden py-24">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="text-3xl font-medium md:text-5xl">
             The <span className="text-green-950">services</span> we offer
           </h1>
-          <p className="uppercase max-w-3xl text-sm text-center mt-4 font-medium text-black/70">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus at
+
+          <p className="mt-5 text-sm leading-7 text-black/70 md:text-base">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus at
             illo veniam ipsam quasi sequi laboriosam esse voluptas molestiae
             corrupti.
           </p>
-
-          <div className="flex w-fit gap-6 mt-16">
-            <div className="rounded-4xl overflow-hidden bg-[#F4D06F] relative w-[18rem] flex flex-col gap-10 p-8 ">
-              <div className="rounded-lg w-full h-40 bg-[#1F1300] "></div>
-              <div className="flex justify-between items-center">
-                <h3 className="text-2xl text-[#1F1300] font-medium max-w-20">
-                  Personalized Program
-                </h3>
-                <button className="p-2 bg-[#1F1300] h-fit w-fit shrink-0 text-sm text-white rounded-lg">
-                  <ArrowUpRightIcon size={22} />
-                </button>
-              </div>
-              <div className="absolute top-14 right-4">
-                <Path1 />
-              </div>
-              <div className="absolute -top-4 -left-4">
-                <Path1 />
-              </div>
-            </div>
-
-            <div className="rounded-4xl bg-lime-400 overflow-hidden w-[18rem] flex flex-col gap-10 p-8 relative ">
-              <div className="rounded-lg w-full h-40 bg-green-950 "></div>
-              <div className="flex justify-between items-center">
-                <h3 className="text-2xl text-green-950 font-medium max-w-20">
-                  Personalized Program
-                </h3>
-                <button className="p-2 bg-green-950 h-fit w-fit shrink-0 text-sm text-white rounded-lg">
-                  <ArrowUpRightIcon size={22} />
-                </button>
-              </div>
-
-              <div className="absolute top-14 right-4">
-                <Path2 />
-              </div>
-              <div className="absolute -top-4 -left-4">
-                <Path2 />
-              </div>
-            </div>
-
-            <div className="rounded-4xl relative bg-green-950 w-[18rem] flex flex-col gap-10 p-8 overflow-hidden ">
-              <div className="rounded-lg w-full h-40 bg-lime-400 "></div>
-              <div className="flex justify-between items-center">
-                <h3 className="text-2xl text-white font-medium max-w-20">
-                  Personalized Program
-                </h3>
-                <button className="p-2 bg-lime-400 h-fit w-fit shrink-0 text-sm text-green-950 rounded-lg">
-                  <ArrowUpRightIcon size={22} />
-                </button>
-              </div>
-
-              <div className="absolute top-26 right-2">
-                <Path4 />
-              </div>
-              <div className="absolute -top-4 -left-4">
-                <Path4 />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-20 mt-16">
-            <div className="flex flex-col items-center text-center">
-              <h1 className="text-4xl text-green-950 font-bold">123</h1>
-              <p className="capitalize font-medium ">Lorem, ipsum dolor.</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <h1 className="text-4xl text-green-950 font-bold">123</h1>
-              <p className="capitalize font-medium ">Lorem, ipsum dolor.</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <h1 className="text-4xl text-green-950 font-bold">123</h1>
-              <p className="capitalize font-medium ">Lorem, ipsum dolor.</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <h1 className="text-4xl text-green-950 font-bold">123</h1>
-              <p className="capitalize font-medium ">Lorem, ipsum dolor.</p>
-            </div>
-          </div>
         </div>
-      </section>
-    </>
+
+        <div className="mt-20">
+          {isMobile ? (
+            <div className="relative">
+              <Swiper
+                modules={[Navigation]}
+                centeredSlides
+                spaceBetween={20}
+                breakpoints={{
+                  0: {
+                    slidesPerView: 1.05,
+                  },
+                  480: {
+                    slidesPerView: 1.15,
+                  },
+                  640: {
+                    slidesPerView: 1.3,
+                  },
+                }}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+                onSlideChange={(swiper) => {
+                  setActiveIndex(swiper.realIndex);
+                }}
+              >
+                {serviceCards.map((card, index) => (
+                  <SwiperSlide key={index}>
+                    <ServiceCard card={card} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              <button
+                onClick={() => swiperRef.current?.slidePrev()}
+                className="absolute left-2 top-1/2 z-20 ..."
+              >
+                <CaretLeftIcon size={22} weight="bold" />
+              </button>
+
+              <button
+                onClick={() => swiperRef.current?.slideNext()}
+                className="absolute right-2 top-1/2 z-20 ..."
+              >
+                <CaretRightIcon size={22} weight="bold" />
+              </button>
+
+              {/* Pagination */}
+              <div className="mt-8 flex justify-center gap-3">
+                {serviceCards.map((card, index) => {
+                  const active = activeIndex === index;
+
+                  return (
+                    <button
+                      key={index}
+                      aria-label={`Go to slide ${index + 1}`}
+                      onClick={() => swiperRef.current?.slideTo(index)}
+                      className="h-2.5 rounded-full transition-all duration-300"
+                      style={{
+                        width: active ? 40 : 10,
+                        backgroundColor: active ? card.themeColor : "#d1d5db",
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <div
+              className="
+                flex
+                items-end
+                justify-center
+                gap-4
+                px-4
+                lg:gap-6
+                xl:gap-8
+              "
+              style={{
+                perspective: "1500px",
+              }}
+            >
+              {serviceCards.map((card, index) => (
+                <div
+                  key={index}
+                  ref={(el) => {
+                    cardsRef.current[index] = el;
+                  }}
+                  style={{
+                    zIndex: arc[index].zIndex,
+                    transformStyle: "preserve-3d",
+                  }}
+                  className="
+                    w-[17rem]
+                    shrink-0
+                    transition-all
+                    duration-500
+                    hover:-translate-y-5
+                    hover:scale-105
+                    lg:w-[18rem]
+                    xl:w-[19rem]
+                  "
+                >
+                  <ServiceCard card={card} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Statistics */}
+        <div
+          className="
+            mx-auto
+            mt-20
+            grid
+            max-w-5xl
+            grid-cols-2
+            gap-x-6
+            gap-y-10
+            lg:grid-cols-4
+          "
+        >
+          {statsData.map((stat, index) => (
+            <div key={index} className="text-center">
+              <h2 className="text-3xl font-bold text-green-950 md:text-4xl">
+                {stat.value}
+              </h2>
+
+              <p className="mt-2 text-xs capitalize text-black/70 md:text-sm">
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
