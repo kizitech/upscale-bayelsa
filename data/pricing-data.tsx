@@ -14,11 +14,11 @@ export const pricingData: PricingTier[] = [
     id: 1,
     name: "Presence",
     tagline: "For businesses getting found for the first time",
-    price: "150,000",
+    price: "100,000",
     cadence: "one-time",
     featured: false,
     features: [
-      "5-page business website",
+      "1-page business website",
       "Google Business Profile setup",
       "Maps listing & verification",
       "Mobile-friendly design",
@@ -30,7 +30,7 @@ export const pricingData: PricingTier[] = [
     id: 2,
     name: "Growth",
     tagline: "For businesses ready to be found and followed",
-    price: "350,000",
+    price: "250,000",
     cadence: "one-time",
     featured: true,
     features: [

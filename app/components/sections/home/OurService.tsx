@@ -3,22 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-import {
-  ArrowUpRightIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
-} from "@phosphor-icons/react";
+import Image from "next/image";
+import { ArrowUpRightIcon, CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 
-import { Navigation } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/navigation";
-
 import { serviceCards, statsData } from "@/data/service-data";
+import { ServiceCardType } from "@/types/service";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,7 +31,7 @@ function useIsMobile(breakpoint = 768) {
 }
 
 interface ServiceCardProps {
-  card: (typeof serviceCards)[number];
+  card: ServiceCardType;
 }
 
 function ServiceCard({ card }: ServiceCardProps) {
@@ -62,30 +54,17 @@ function ServiceCard({ card }: ServiceCardProps) {
         ${card.bgColor}
       `}
     >
-      <div
-        className={`
-          w-full
-          h-44
-          sm:h-52
-          rounded-2xl
-          ${card.cardColor}
-        `}
-      />
+      <div className={`w-full h-44 sm:h-52 flex rounded-2xl `} >
+        <Image src={card.image} alt={card.title} width={4000} height={3000} className="w-full h-full z-50 object-cover rounded-2xl" />
+      </div>
 
       <div className="flex justify-between items-center mt-10">
-        <h3
-          className={`
-            text-2xl
-            font-medium
-            max-w-[140px]
-            leading-tight
-            ${card.textColor}
-          `}
-        >
+        <h3 className={`text-2xl font-medium max-w-[140px] leading-tight ${card.textColor}`}>
           {card.title}
         </h3>
 
         <button
+          aria-label={`Learn more about ${card.title}`}
           className={`
             h-12
             w-12
@@ -105,30 +84,18 @@ function ServiceCard({ card }: ServiceCardProps) {
         </button>
       </div>
 
-      <div className="absolute top-16 right-2 pointer-events-none">
-        {card.path}
-      </div>
-
-      <div className="absolute -top-4 -left-4 pointer-events-none">
-        {card.path}
-      </div>
+      <div className="absolute top-16 right-2 pointer-events-none">{card.path}</div>
+      <div className="absolute -top-4 -left-4 pointer-events-none">{card.path}</div>
     </div>
   );
 }
 
 export default function OurService() {
   const sectionRef = useRef<HTMLDivElement>(null);
-
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
   const swiperRef = useRef<SwiperType | null>(null);
 
-  const prevRef = useRef<HTMLButtonElement>(null);
-
-  const nextRef = useRef<HTMLButtonElement>(null);
-
   const isMobile = useIsMobile();
-
   const [activeIndex, setActiveIndex] = useState(0);
 
   const arc = useMemo(() => {
@@ -152,9 +119,7 @@ export default function OurService() {
     if (isMobile) return;
 
     const ctx = gsap.context(() => {
-      const cards = cardsRef.current.filter(
-        (card): card is HTMLDivElement => card !== null,
-      );
+      const cards = cardsRef.current.filter((card): card is HTMLDivElement => card !== null);
 
       cards.forEach((card, index) => {
         gsap.fromTo(
@@ -194,7 +159,7 @@ export default function OurService() {
   }, [arc, isMobile]);
 
   return (
-    <section ref={sectionRef} className="overflow-hidden py-24">
+    <section ref={sectionRef} id="services" className="overflow-hidden py-24">
       <div className="mx-auto max-w-7xl px-4">
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-3xl font-medium md:text-5xl">
@@ -202,29 +167,23 @@ export default function OurService() {
           </h1>
 
           <p className="mt-5 text-sm leading-7 text-black/70 md:text-base">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus at
-            illo veniam ipsam quasi sequi laboriosam esse voluptas molestiae
-            corrupti.
+            From the first line of code to the top of the results page. We build websites,
+            tune them for speed, and get them found.
           </p>
         </div>
 
         <div className="mt-20">
           {isMobile ? (
+            // Buttons live in the horizontal padding around the swiper, not
+            // on top of the slides, so they never overlap card content.
             <div className="relative">
               <Swiper
-                modules={[Navigation]}
                 centeredSlides
                 spaceBetween={20}
                 breakpoints={{
-                  0: {
-                    slidesPerView: 1.05,
-                  },
-                  480: {
-                    slidesPerView: 1.15,
-                  },
-                  640: {
-                    slidesPerView: 1.3,
-                  },
+                  0: { slidesPerView: 1.05 },
+                  480: { slidesPerView: 1.15 },
+                  640: { slidesPerView: 1.3 },
                 }}
                 onSwiper={(swiper) => {
                   swiperRef.current = swiper;
@@ -240,19 +199,57 @@ export default function OurService() {
                 ))}
               </Swiper>
 
-              <button
+              {/* <button
+                aria-label="Previous slide"
                 onClick={() => swiperRef.current?.slidePrev()}
-                className="absolute left-2 top-1/2 z-20 ..."
+                className="
+                  absolute
+                  left-0
+                  top-1/2
+                  z-20
+                  flex
+                  h-10
+                  w-10
+                  -translate-y-1/2
+                  items-center
+                  justify-center
+                  rounded-full
+                  border
+                  border-black/10
+                  bg-white
+                  shadow-sm
+                  transition-colors
+                  hover:bg-black/5
+                "
               >
-                <CaretLeftIcon size={22} weight="bold" />
+                <CaretLeftIcon size={20} weight="bold" />
               </button>
 
               <button
+                aria-label="Next slide"
                 onClick={() => swiperRef.current?.slideNext()}
-                className="absolute right-2 top-1/2 z-20 ..."
+                className="
+                  absolute
+                  right-0
+                  top-1/2
+                  z-20
+                  flex
+                  h-10
+                  w-10
+                  -translate-y-1/2
+                  items-center
+                  justify-center
+                  rounded-full
+                  border
+                  border-black/10
+                  bg-white
+                  shadow-sm
+                  transition-colors
+                  hover:bg-black/5
+                "
               >
-                <CaretRightIcon size={22} weight="bold" />
-              </button>
+                <CaretRightIcon size={20} weight="bold" />
+              </button> */}
 
               {/* Pagination */}
               <div className="mt-8 flex justify-center gap-3">
@@ -276,18 +273,8 @@ export default function OurService() {
             </div>
           ) : (
             <div
-              className="
-                flex
-                items-end
-                justify-center
-                gap-4
-                px-4
-                lg:gap-6
-                xl:gap-8
-              "
-              style={{
-                perspective: "1500px",
-              }}
+              className="flex items-end justify-center gap-4 px-4 lg:gap-6 xl:gap-8"
+              style={{ perspective: "1500px" }}
             >
               {serviceCards.map((card, index) => (
                 <div
@@ -318,27 +305,11 @@ export default function OurService() {
         </div>
 
         {/* Statistics */}
-        <div
-          className="
-            mx-auto
-            mt-20
-            grid
-            max-w-5xl
-            grid-cols-2
-            gap-x-6
-            gap-y-10
-            lg:grid-cols-4
-          "
-        >
+        <div className="mx-auto mt-20 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
           {statsData.map((stat, index) => (
             <div key={index} className="text-center">
-              <h2 className="text-3xl font-bold text-green-950 md:text-4xl">
-                {stat.value}
-              </h2>
-
-              <p className="mt-2 text-xs capitalize text-black/70 md:text-sm">
-                {stat.label}
-              </p>
+              <h2 className="text-3xl font-bold text-green-950 md:text-4xl">{stat.value}</h2>
+              <p className="mt-2 text-xs capitalize text-black/70 md:text-sm">{stat.label}</p>
             </div>
           ))}
         </div>

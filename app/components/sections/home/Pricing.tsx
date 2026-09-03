@@ -104,7 +104,7 @@ export default function Pricing() {
               `}
             >
               {tier.featured && (
-                <span className="absolute -top-4 left-8 rounded-lg bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-green-950">
+                <span className="absolute -top-4 left-8 rounded-lg bg-[#A3E635] px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-green-950">
                   Most Popular
                 </span>
               )}

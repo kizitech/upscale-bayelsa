@@ -104,7 +104,7 @@ export default function FAQ() {
 
   return (
     <section ref={sectionRef} id="faq" className="w-full ">
-      <div className="max-w-5xl w-full mx-auto px-4 flex flex-col items-center">
+      <div className="max-w-5xl w-full mx-auto px-4 pb-20 flex flex-col items-center">
         <div ref={headingRef} className="flex flex-col items-center gap-4 text-center mb-14">
           <p className="uppercase text-green-950 text-sm font-semibold py-2 px-6 rounded-lg border border-green-950 w-fit">
             FAQ

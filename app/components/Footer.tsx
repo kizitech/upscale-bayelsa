@@ -10,6 +10,7 @@ import {
   FacebookLogoIcon,
   XLogoIcon,
   EnvelopeSimpleIcon,
+  WhatsappLogoIcon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import UpscaleLogoWithText from "@/public/UpscaleLogoWithText";
@@ -25,18 +26,18 @@ const serviceLinks = [
 ];
 
 const companyLinks = [
-  { title: "About Us", url: "#about-us" },
-  { title: "Our Work", url: "#" },
-  { title: "Pricing", url: "#pricing" },
-  { title: "FAQ", url: "#faq" },
-  {title: "Contact", url:"#"},
+  { title: "About Us", url: "/#about" },
+  { title: "Our Work", url: "/#about" },
+  { title: "Pricing", url: "/#pricing" },
+  { title: "FAQ", url: "/#faq" },
+  {title: "Contact", url:"/contact"},
 ];
 
 const socialLinks = [
-  { icon: InstagramLogoIcon, label: "Instagram" },
-  { icon: XLogoIcon, label: "X" },
-  { icon: FacebookLogoIcon, label: "Facebook" },
-  { icon: LinkedinLogoIcon, label: "LinkedIn" },
+  { icon: InstagramLogoIcon, label: "Instagram",url:"#" },
+  { icon: XLogoIcon, label: "X", url: "#" },
+  { icon: FacebookLogoIcon, label: "Facebook", url: "#" },
+  { icon: WhatsappLogoIcon, label: "WhatsApp", url: "https://wa.me/2347033878044" },
 ];
 
 export default function Footer() {
@@ -65,7 +66,7 @@ export default function Footer() {
     <footer className="w-full md:px-4 md:pb-4">
       <div
         ref={footerRef}
-        className="md:max-w-7xl w-full relative mx-auto overflow-hidden md:rounded-4xl bg-green-950 text-white px-6 py-14 md:px-14 md:py-16 flex flex-col gap-14"
+        className="md:max-w-7xl w-full relative mx-auto overflow-hidden md:rounded-4xl bg-green-950 z-50 text-white px-6 py-14 md:px-14 md:py-16 flex flex-col gap-14"
       >
         <div className="absolute bottom-0 right-0 ">
           <Image
@@ -92,7 +93,7 @@ export default function Footer() {
             onSubmit={(e) => e.preventDefault()}
             className="flex max-md:flex-col max-md:w-full max-w-md items-center gap-2 rounded-lg bg-white/10 p-1.5"
           >
-            <div className="flex gap-4 max-md:w-full items-center">
+            <div className="flex flex-1 gap-4 max-md:w-full items-center">
               <EnvelopeSimpleIcon
                 size={20}
                 className="ml-3 text-white/70 shrink-0"
@@ -174,16 +175,22 @@ export default function Footer() {
               Contact
             </p>
             <a
-              href="mailto:hello@yourbrand.com"
+              href="mailto:conatct@upscalebusiness.org"
               className="text-sm text-white/70 hover:text-white transition-colors duration-200 w-fit"
             >
-              hello@yourbrand.com
+              conact@upscalebusiness.org
             </a>
             <a
-              href="tel:+2340000000000"
+              href="tel:+2347039444495"
               className="text-sm text-white/70 hover:text-white transition-colors duration-200 w-fit"
             >
-              +234 000 000 0000
+              +234 703 9444 495
+            </a>
+            <a
+              href="tel:+2347065434062"
+              className="text-sm text-white/70 hover:text-white transition-colors duration-200 w-fit"
+            >
+              +234 706 5434 062
             </a>
             <p className="text-sm text-white/70">Bayelsa, Nigeria</p>
           </div>
@@ -196,10 +203,10 @@ export default function Footer() {
           </p>
 
           <div className="flex items-center gap-3">
-            {socialLinks.map(({ icon: Icon, label }) => (
+            {socialLinks.map(({ icon: Icon, label, url }) => (
               <a
                 key={label}
-                href="#"
+                href={url}
                 aria-label={label}
                 className="flex items-center justify-center h-9 w-9 rounded-lg bg-white/10 text-white hover:bg-white hover:text-green-950 transition-colors duration-200"
               >

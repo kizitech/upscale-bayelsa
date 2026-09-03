@@ -109,7 +109,7 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full py-20">
+    <section ref={sectionRef} className="w-full overflow-x-hidden py-20">
       <div className="mx-auto flex w-full max-w-7xl flex-col px-4">
         {/* Heading */}
         <div
@@ -122,15 +122,15 @@ export default function Testimonials() {
             </p>
 
             <h2 className="text-3xl font-medium capitalize leading-tight md:text-5xl">
-              Businesses that got{" "}
+              Businesses & individuals that got{" "}
               <span className="text-green-950">found</span> because they got
               started
             </h2>
           </div>
 
           <p className="max-w-md text-sm font-medium leading-7 text-black/60 md:text-lg">
-            Real feedback from businesses we&apos;ve taken from invisible to
-            unmissable — online and on the map.
+            Real feedback from clients we&apos;ve taken from invisible to
+            unmissable online and on the map.
           </p>
         </div>
 

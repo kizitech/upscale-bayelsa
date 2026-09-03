@@ -1,5 +1,8 @@
+
+
 export interface ServiceCardType {
   title: string;
+  description: string;
   bgColor: string;
   cardColor: string;
   textColor: string;
@@ -7,6 +10,7 @@ export interface ServiceCardType {
   buttonTextColor: string;
   themeColor: string;
   path: React.ReactNode;
+  image: string;
 }
 
 export interface StatType {

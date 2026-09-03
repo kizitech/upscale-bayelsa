@@ -12,16 +12,17 @@ export default function WhyUs() {
               <h2 className="capitalize text-green-950 md:text-5xl text-2xl font-medium ">
                 Why choose us?
               </h2>
-              <p className="md:text-lg text-sm bg-red font-medium max-w-3xl text-black/60 w-full">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Praesentium error expedita impedit aut facilis. Nesciunt
-                mollitia praesentium molestiae blanditiis suscipit, unde quod
-                laboriosam magnam nobis. Sunt iure voluptatem molestiae hic.
+              <p className="md:text-lg text-sm font-medium max-w-3xl text-black/60 w-full">
+                We design and build websites for businesses & individuals that want to be
+                found. Every site comes with local SEO,
+                Google Maps optimization, integrated contact details and
+                social links, plus ongoing support so your business looks
+                good and shows up when people search for it.
               </p>
             </div>
 
             <button className="px-6 py-2 font-medium text-white w-fit bg-green-950 rounded-lg shrink-0 h-fit">
-              Get Started
+              Request a Quote
             </button>
           </div>
 
@@ -32,17 +33,23 @@ export default function WhyUs() {
               return (
                 <div
                   key={item.id}
-                  className="flex flex-col cursor-pointer justify-between gap-4 rounded-lg text-green-950 group hover:bg-green-950 hover:text-white bg-green-100 md:p-6 p-4 ease-in-out duration-500 delay-100"
+                  className="relative overflow-hidden flex flex-col cursor-pointer justify-between gap-4 rounded-lg text-green-950 group hover:bg-green-950 hover:text-white bg-green-100 md:p-6 p-4 ease-in-out duration-500 delay-100"
                 >
-                  <Icon size={40} className="max-md:size-8" />
+                  <div className="pointer-events-none absolute inset-0 text-current opacity-[0.14] group-hover:opacity-[0.26] transition-opacity duration-1000">
+                    {item.pattern}
+                  </div>
 
-                  <h3 className="md:text-4xl text-3xl">{item.title}</h3>
+                  <div className="relative z-10 flex flex-col justify-between gap-4 h-full">
+                    <Icon size={40} className="max-md:size-8" />
 
-                  <p className="font-medium">{item.description}</p>
+                    <h3 className="md:text-4xl text-3xl">{item.title}</h3>
 
-                  <button className="mt-4 px-6 py-2 text-white group-hover:bg-green-100 group-hover:text-green-950 font-medium bg-green-950 rounded-lg shrink-0 h-fit ease-in-out duration-300">
-                    {item.buttonText}
-                  </button>
+                    <p className="font-medium">{item.description}</p>
+
+                    <button className="mt-4 md:mt-12 px-6 py-2 text-white group-hover:bg-green-100 group-hover:text-green-950 font-medium bg-green-950 rounded-lg shrink-0 h-fit ease-in-out duration-300 w-fit">
+                      {item.buttonText}
+                    </button>
+                  </div>
                 </div>
               );
             })}

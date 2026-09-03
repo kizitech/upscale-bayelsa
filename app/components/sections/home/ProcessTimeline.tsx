@@ -17,21 +17,21 @@ type Step = {
 const steps: Step[] = [
   {
     number: "1",
-    title: "Project Discovery Call",
+    title: "Discovery & Strategy",
     description:
-      "Party we years to order allow asked of. We so opinion friends me message as delight.",
+      "We start by understanding your business, goals, audience, and what you want your website to achieve. This gives us a clear direction before we begin building.",
   },
   {
     number: "2",
-    title: "Project Discovery Call",
+    title: "Design & Development",
     description:
-      "His defective nor convinced residence own. Connection has put impossible own apartments boisterous.",
+      "Once the direction is clear, we turn the idea into a polished digital experience. We design, develop, and refine every detail to make sure your website looks great and works smoothly.",
   },
   {
     number: "3",
-    title: "Project Discovery Call",
+    title: "Launch & Growth",
     description:
-      "From they fine john he give of rich he. They age and draw mrs like. Improving end distrusts may instantly.",
+      "After testing and final refinements, we get your website ready to go live. But our work doesn't stop there we make sure you have a solid foundation to keep growing.",
   },
 ];
 
@@ -155,15 +155,15 @@ export default function ProcessTimeline() {
             className="mb-3 text-sm font-medium tracking-widest"
             style={{ color: BRAND }}
           >
-            STOCKIE OPERATION ACROSS THE WORLD
+            OUR PROCESS
           </p>
           <h2 className="mb-4 text-3xl font-semibold capitalize leading-tight text-black sm:text-5xl">
-            We have best team
-            <br className="hidden sm:block" /> and best process
+            We have a clear process
+            <br className="hidden sm:block" /> for building great work
           </h2>
           <p className="mb-7 text-sm leading-relaxed text-slate-500 sm:text-base">
-            Yet bed any for travelling assistance indulgence unpleasing. Not
-            thoughts all exercise blessing. Indulgence way everything joy.
+            From the first conversation to the final launch, we keep the process
+            simple, collaborative, and focused on getting you the right result.
           </p>
           <button
             type="button"
@@ -195,7 +195,6 @@ export default function ProcessTimeline() {
               strokeWidth="3"
               strokeLinecap="round"
             />
-            
           </svg>
 
           <div

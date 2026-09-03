@@ -6,4 +6,5 @@ export type WhyUsItem = {
   description: string;
   buttonText: string;
   icon: Icon;
+  pattern: React.ReactNode;
 };

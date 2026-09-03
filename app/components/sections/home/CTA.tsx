@@ -53,13 +53,13 @@ export default function CTASection() {
             aria-hidden
             className="pointer-events-none absolute left-0 md:top-0 top-10 opacity-10 md:opacity-20"
           >
-            <Image src={`/squigle.png`} alt='#' width={3000} height={2500} className=" md:rotate-120 scale-150 h-full w-full object-contain scale-100" />
+            <Image src={`/squigle.png`} alt='#' quality={100} width={3000} height={2500} className=" md:rotate-120 scale-150 h-full w-full object-contain scale-100" />
           </div>
           <div
             aria-hidden
             className="pointer-events-none absolute -right-50 -top-50 opacity-0 md:opacity-20"
           >
-            <Image src={`/squigle.png`} alt='#' width={3000} height={2500} className=" -rotate-10 scale-150 h-full w-full object-contain scale-100" />
+            <Image src={`/squigle.png`} alt='#' quality={100} width={3000} height={2500} className=" -rotate-10 scale-150 h-full w-full object-contain scale-100" />
           </div>
 
           <div ref={contentRef} className="relative z-10 flex flex-col items-center gap-4 max-w-2xl">

@@ -9,17 +9,25 @@ import Hamburger from "./Hamburger";
 const navLinks = [
   {
     name: "What We Offer",
-    href: "#",
+    href: "/#services",
   },
   {
     name: "Pricing",
-    href: "#pricing",
+    href: "/#pricing",
+  },
+  {
+    name: "Who We Are",
+    href: "/#about",
+  },
+  {
+    name: "Contact Us",
+    href: "/contact",
   },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [hash, setHash] = useState("");
+  const [activeSection, setActiveSection] = useState("");
   const pathname = usePathname();
 
   const [scrolled, setScrolled] = useState(false);
@@ -38,28 +46,49 @@ export default function Navbar() {
 
   // Returns true when the current path matches the link's href.
   // Hash-only links (#, #pricing) only match on the home page ("/").
-  useEffect(() => {
-    const updateHash = () => {
-      setHash(window.location.hash);
-    };
+ useEffect(() => {
+  if (pathname !== "/") return;
 
-    updateHash();
+  const sectionLinks = navLinks.filter((link) => link.href.startsWith("#"));
 
-    window.addEventListener("hashchange", updateHash);
+  const sections = sectionLinks
+    .map((link) => document.getElementById(link.href.slice(1)))
+    .filter((section): section is HTMLElement => section !== null);
 
-    return () => {
-      window.removeEventListener("hashchange", updateHash);
-    };
-  }, []);
+  if (!sections.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visibleSections = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort(
+          (a, b) =>
+            Math.abs(a.boundingClientRect.top) -
+            Math.abs(b.boundingClientRect.top),
+        );
+
+      if (visibleSections.length > 0) {
+        setActiveSection(`#${visibleSections[0].target.id}`);
+      }
+    },
+    {
+      root: null,
+      rootMargin: "-20% 0px -60% 0px",
+      threshold: 0,
+    },
+  );
+
+  sections.forEach((section) => observer.observe(section));
+
+  return () => observer.disconnect();
+}, [pathname]);
 
   const isActive = (href: string) => {
-    // Home section
-    if (href === "#") {
-      return pathname === "/" && hash === "";
+    if (href.startsWith("#")) {
+      return pathname === "/" && activeSection === href;
     }
 
-    // Section links
-    return pathname === "/" && hash === href;
+    return pathname === href;
   };
 
   return (
@@ -82,6 +111,7 @@ export default function Navbar() {
     left-1/2 -translate-x-1/2
     transition-all duration-500 ease-out
     z-100
+    ${isOpen ? "max-md:bg-white max-md:rounded-b-none" : ""}
     ${
       scrolled
         ? `
@@ -115,7 +145,7 @@ export default function Navbar() {
         >
           {/* Desktop Nav */}
           <ul className="flex gap-8 items-center max-md:hidden">
-            {navLinks.map((link) => {
+            {navLinks.slice(0, 2).map((link) => {
               const active = isActive(link.href);
 
               return (
@@ -153,7 +183,7 @@ export default function Navbar() {
 
                     ${
                       active
-                        ? "before:opacity-100 after:opacity-100"
+                        ? "before:opacity-60 after:opacity-100"
                         : "before:opacity-0 after:opacity-0 hover:after:opacity-100 hover:before:opacity-100 hover:before:bg-lime-500 hover:after:bg-lime-500"
                     }
                     `}
@@ -166,7 +196,8 @@ export default function Navbar() {
           </ul>
 
           {/* Logo */}
-          <div
+          <Link
+          href="/"
             className={`
     overflow-hidden flex items-center justify-center transition-all duration-500
 
@@ -180,14 +211,23 @@ export default function Navbar() {
               height={300}
               className={`object-cover ${scrolled ? "max-md:h-30 h-30 max-md:w-50! w-100" : "max-md:h-30 h-60 max-md:w-50! w-100"}`}
             />
-          </div>
+          </Link>
 
           {/* Desktop CTA */}
-          <Link
-            href="/contact"
-            className={`relative py-2 px-1 transition-all duration-300 max-md:hidden
-          
-                  text-green-950
+          {navLinks.slice(2, 4).map((item, i) => {
+              const active = isActive(item.href);
+
+            return (
+              <div key={i} className="max-md:hidden">
+                <Link
+                    href={item.href}
+                    className={`relative py-2 px-1 transition-all duration-300
+                    ${
+                      active
+                        ? "text-green-950"
+                        : "text-black/70 hover:text-green-950"
+                    }
+
                     before:absolute
                     before:left-1/2
                     before:-translate-x-1/2
@@ -211,14 +251,17 @@ export default function Navbar() {
                     after:duration-300
 
                     ${
-                      pathname === "/contact"
-                        ? "before:opacity-100 after:opacity-100"
+                      active
+                        ? "before:opacity-60 after:opacity-100"
                         : "before:opacity-0 after:opacity-0 hover:after:opacity-100 hover:before:opacity-100 hover:before:bg-lime-500 hover:after:bg-lime-500"
                     }
-            `}
-          >
-            Contact Us
-          </Link>
+                    `}
+                  >
+                    {item.name}
+                  </Link>
+              </div>
+            );
+          })}
 
           {/* Hamburger */}
           <div className="relative md:hidden flex z-[120]">
@@ -233,7 +276,7 @@ export default function Navbar() {
               
               ${
                 isOpen
-                  ? "opacity-100 translate-y-0 max-h-[500px] py-6"
+                  ? "opacity-100 translate-y-0 max-h-125 rounded-b-2xl py-6"
                   : "opacity-0 -translate-y-4 max-h-0 py-0 pointer-events-none"
               }
             `}
@@ -259,7 +302,7 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className={`group relative flex items-center justify-between py-4 px-4 rounded-xl transition-all duration-300
+                      className={`group relative flex items-center justify-between py-3 px-4 rounded-xl transition-all duration-300
                         
                         ${
                           active
@@ -276,20 +319,8 @@ export default function Navbar() {
                           
                           ${
                             active
-                              ? "bg-white scale-100"
+                              ? "bg-[#A3E635] scale-100"
                               : "bg-green-900 scale-0 group-hover:scale-100"
-                          }
-                        `}
-                      />
-
-                      {/* Bottom Accent */}
-                      <span
-                        className={`absolute bottom-2 left-1/2 -translate-x-1/2 h-[2px] w-[20%] rounded-full transition-all duration-300
-                          
-                          ${
-                            active
-                              ? "bg-white opacity-100"
-                              : "bg-green-900 opacity-0 group-hover:opacity-100"
                           }
                         `}
                       />

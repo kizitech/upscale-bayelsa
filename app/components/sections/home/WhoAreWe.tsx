@@ -89,7 +89,11 @@ export default function WhoAreWe() {
   const dashOffset = 1 - drawProgress;
 
   return (
-    <section ref={sectionRef} className="w-full flex relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      id="about"
+      className="w-full flex relative overflow-hidden"
+    >
       {/* Squiggly accent line */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {/* Vertical squiggle — mobile/tablet only, its own authored path */}
@@ -234,25 +238,38 @@ export default function WhoAreWe() {
           </h1>
 
           <p className="mt-4 md:mt-5 text-sm leading-7 text-black/70 md:text-base">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus at
-            illo veniam ipsam quasi sequi laboriosam esse voluptas molestiae
-            corrupti.
+            We design and build digital experiences for people and businesses
+            that want to stand out. From the first idea to the final
+            interaction, we combine creativity, strategy, and engineering to
+            create products that are beautiful, purposeful, and built to last.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full h-full gap-4 p-2 sm:p-4">
           <div className="sm:col-span-2 lg:col-span-1 lg:row-span-2 rounded-lg p-4 bg-gray-500/20 backdrop-blur-xl border border-white/40 flex gap-4 flex-col w-full lg:max-w-90">
-            <div className="w-full rounded-lg bg-white aspect-square"></div>
+            <div className="w-full md:max-h-70 rounded-lg bg-white aspect-square">
+              <Image
+                src="/kizito-profile.jpg"
+                alt="#"
+                height={1500}
+                width={1000}
+                className="h-full w-full rounded-lg object-cover"
+              />
+            </div>
             <div className="flex flex-col gap-4">
               <h3 className="text-xl sm:text-2xl font-medium">Kizito Ohani</h3>
               <p className="text-sm text-black/70">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
-                totam accusantium et. Itaque maxime doloremque inventore nam
-                esse architecto vitae.
+                A creative developer focused on crafting engaging digital
+                experiences, bringing together thoughtful interfaces, modern
+                technologies, and a strong eye for detail.
               </p>
-              <button className="px-6 py-2 w-fit text-white bg-green-950 rounded-lg">
+              <a
+                target="blank"
+                href="https://kizitech-v2.vercel.app"
+                className="px-6 py-2 w-fit text-white bg-green-950 rounded-lg"
+              >
                 View Portfolio
-              </button>
+              </a>
             </div>
           </div>
 
@@ -263,17 +280,20 @@ export default function WhoAreWe() {
             <div>
               <h4 className="text-base font-medium">Years combined</h4>
               <p className="text-sm text-black/70">
-                Experience shipping products across design and engineering.
+                Combined experience designing, developing, and shipping digital
+                products across different projects and industries.
               </p>
             </div>
           </div>
 
           <div className="bg-gray-500/20 backdrop-blur-xl border border-white/40 rounded-lg min-h-40 sm:min-h-50 p-5 flex flex-col justify-between">
-           <ClipboardTextIcon className="text-green-950" size={62} />
+            <ClipboardTextIcon className="text-green-950" size={62} />
             <div>
               <h4 className="text-base font-medium">Our approach</h4>
               <p className="text-sm text-black/70">
-                We pair thoughtful design with clean, dependable code.
+                We believe great products sit at the intersection of good
+                design, solid engineering, and a clear understanding of the
+                people using them.
               </p>
             </div>
           </div>
@@ -284,13 +304,17 @@ export default function WhoAreWe() {
                 Kensuomo Travis
               </h3>
               <p className="text-sm text-black/70">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
-                totam accusantium et. Itaque maxime doloremque inventore nam
-                esse architecto vitae.
+                A frontend developer passionate about turning ideas into
+                polished, responsive experiences through modern web
+                technologies, thoughtful interaction, and clean code.
               </p>
-              <button className="px-6 py-2 w-fit sm:mx-0 text-white bg-green-950 rounded-lg">
+              <a
+                target="blank"
+                href="https://ken-travis-portfolio.vercel.app"
+                className="px-6 py-2 w-fit sm:mx-0 text-white bg-green-950 rounded-lg"
+              >
                 View Portfolio
-              </button>
+              </a>
             </div>
             <div className="max-md:w-full aspect-square sm:h-70  rounded-lg bg-white overflow-hidden ">
               <Image

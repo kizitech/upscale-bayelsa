@@ -13,7 +13,6 @@ import Testimonials from "./components/sections/home/Testimonials";
 export default function Home() {
   return (
     <>
-      <Navbar />
       <main className="flex flex-col gap-20 w-full ">
         <HeroSection />
         <WhyUs />
@@ -24,7 +23,6 @@ export default function Home() {
         <Pricing />
         <Testimonials />
         <FAQ />
-        <Footer/>
       </main>
     </>
   );
