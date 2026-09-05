@@ -53,7 +53,7 @@ export default function WhyUs() {
                     <p className="font-medium">{item.description}</p>
 
                     <button
-                      onClick={() => openModal(item.title)}
+                      onClick={() => openModal(item.buttonText)}
                       className="mt-4 md:mt-12 px-6 py-2 text-white group-hover:bg-green-100 group-hover:text-green-950 font-medium bg-green-950 rounded-lg shrink-0 h-fit ease-in-out duration-300 w-fit cursor-pointer"
                     >
                       {item.buttonText}
