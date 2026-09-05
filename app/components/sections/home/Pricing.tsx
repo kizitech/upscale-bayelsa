@@ -1,18 +1,20 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CheckIcon } from "@phosphor-icons/react";
 
 import { pricingData } from "@/data/pricing-data";
+import { usePricingInquiry } from "../../PricingInquiryProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Pricing() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const { openInquiryModal } = usePricingInquiry();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -53,7 +55,6 @@ export default function Pricing() {
           },
         );
       });
-    
     }, sectionRef);
 
     return () => ctx.revert();
@@ -152,6 +153,7 @@ export default function Pricing() {
               </ul>
 
               <button
+               onClick={() => openInquiryModal(String(tier.id))}
                 className={`
                   mt-2
                   px-6

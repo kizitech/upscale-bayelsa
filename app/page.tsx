@@ -9,21 +9,24 @@ import CTASection from "./components/sections/home/CTA";
 import FAQ from "./components/sections/home/Faq";
 import Pricing from "./components/sections/home/Pricing";
 import Testimonials from "./components/sections/home/Testimonials";
+import PricingInquiryProvider from "./components/PricingInquiryProvider";
 
 export default function Home() {
   return (
     <>
-      <main className="flex flex-col gap-20 w-full ">
-        <HeroSection />
-        <WhyUs />
-        <WhoAreWe />
-        <OurService />
-        <ProcessTimeline />
-        <CTASection />
-        <Pricing />
-        <Testimonials />
-        <FAQ />
-      </main>
+      <PricingInquiryProvider>
+        <main className="flex flex-col gap-20 w-full ">
+          <HeroSection />
+          <WhyUs />
+          <WhoAreWe />
+          <OurService />
+          <ProcessTimeline />
+          <CTASection />
+          <Pricing />
+          <Testimonials />
+          <FAQ />
+        </main>
+      </PricingInquiryProvider>
     </>
   );
 }

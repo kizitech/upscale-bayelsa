@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePricingInquiry } from "../../PricingInquiryProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,6 +50,7 @@ export default function ProcessTimeline() {
   const desktopCardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mobileCardRefs = useRef<(HTMLLIElement | null)[]>([]);
   const headingRef = useRef<HTMLDivElement>(null);
+  const { openInquiryModal } = usePricingInquiry();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -150,7 +152,7 @@ export default function ProcessTimeline() {
 
       <div className="relative mx-auto max-w-6xl">
         {/* Heading */}
-        <div ref={headingRef} className=" max-w-xl ">
+        <div ref={headingRef} className=" max-w-xl relative z-80">
           <p
             className="mb-3 text-sm font-medium tracking-widest"
             style={{ color: BRAND }}
@@ -167,7 +169,8 @@ export default function ProcessTimeline() {
           </p>
           <button
             type="button"
-            className="rounded-md px-7 py-3 text-sm font-semibold text-white shadow-sm transition-transform duration-200 hover:scale-[1.03] active:scale-95"
+            onClick={() => openInquiryModal()}
+            className="rounded-md px-7 py-3 text-sm font-semibold text-white hover:bg-red-600 shadow-sm transition-transform duration-200 hover:scale-[1.03] active:scale-95"
             style={{ backgroundColor: BRAND }}
           >
             Get Started
