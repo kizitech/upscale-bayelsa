@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import Image from "next/image";
+import { useServiceModal } from "../../ServiceModalContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,6 +13,7 @@ export default function CTASection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const bannerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const { openModal } = useServiceModal();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -77,7 +79,10 @@ export default function CTASection() {
               people can find.
             </p>
 
-            <button className="mt-2 flex items-center gap-2 px-7 py-3 text-green-950 bg-white rounded-lg font-medium transition-transform duration-200 hover:scale-[1.03] active:scale-95">
+            <button
+              onClick={() => openModal()}
+              className="mt-2 flex cursor-pointer items-center gap-2 px-7 py-3 text-green-950 bg-white rounded-lg font-medium transition-transform duration-200 hover:scale-[1.03] active:scale-95"
+            >
               Estimate the project
               <ArrowUpRightIcon size={20} />
             </button>

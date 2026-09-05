@@ -14,6 +14,7 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import UpscaleLogoWithText from "@/public/UpscaleLogoWithText";
+import { useServiceModal } from "./ServiceModalContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -43,6 +44,7 @@ const socialLinks = [
 export default function Footer() {
   const footerRef = useRef<HTMLDivElement>(null);
   const [email, setEmail] = useState("");
+  const { openModal } = useServiceModal();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -145,13 +147,14 @@ export default function Footer() {
               Services
             </p>
             {serviceLinks.map((link) => (
-              <a
+              <button
                 key={link}
-                href="#"
-                className="text-sm text-white/70 hover:text-white transition-colors duration-200 w-fit"
+                type="button"
+                onClick={() => openModal(link)}
+                className="text-left text-sm text-white/70 hover:text-white transition-colors duration-200 w-fit cursor-pointer"
               >
                 {link}
-              </a>
+              </button>
             ))}
           </div>
 

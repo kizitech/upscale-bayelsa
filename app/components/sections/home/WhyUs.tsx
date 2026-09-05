@@ -1,8 +1,11 @@
 "use client";
 
 import { whyUsData } from "@/data/why-us-data";
+import { useServiceModal } from "../../ServiceModalContext";
 
 export default function WhyUs() {
+  const { openModal } = useServiceModal();
+
   return (
     <>
       <section className="w-full flex">
@@ -21,7 +24,10 @@ export default function WhyUs() {
               </p>
             </div>
 
-            <button className="px-6 py-2 font-medium text-white w-fit bg-green-950 rounded-lg shrink-0 h-fit">
+            <button
+              onClick={() => openModal()}
+              className="px-6 py-2 font-medium text-white w-fit bg-green-950 rounded-lg shrink-0 h-fit cursor-pointer transition-colors hover:bg-black"
+            >
               Request a Quote
             </button>
           </div>
@@ -46,7 +52,10 @@ export default function WhyUs() {
 
                     <p className="font-medium">{item.description}</p>
 
-                    <button className="mt-4 md:mt-12 px-6 py-2 text-white group-hover:bg-green-100 group-hover:text-green-950 font-medium bg-green-950 rounded-lg shrink-0 h-fit ease-in-out duration-300 w-fit">
+                    <button
+                      onClick={() => openModal(item.title)}
+                      className="mt-4 md:mt-12 px-6 py-2 text-white group-hover:bg-green-100 group-hover:text-green-950 font-medium bg-green-950 rounded-lg shrink-0 h-fit ease-in-out duration-300 w-fit cursor-pointer"
+                    >
                       {item.buttonText}
                     </button>
                   </div>

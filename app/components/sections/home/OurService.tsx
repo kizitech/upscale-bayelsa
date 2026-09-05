@@ -11,6 +11,7 @@ import type { Swiper as SwiperType } from "swiper";
 
 import { serviceCards, statsData } from "@/data/service-data";
 import { ServiceCardType } from "@/types/service";
+import { useServiceModal } from "../../ServiceModalContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,9 +33,10 @@ function useIsMobile(breakpoint = 768) {
 
 interface ServiceCardProps {
   card: ServiceCardType;
+  onLearnMore: (service: string) => void;
 }
 
-function ServiceCard({ card }: ServiceCardProps) {
+function ServiceCard({ card, onLearnMore }: ServiceCardProps) {
   return (
     <div
       className={`
@@ -65,6 +67,7 @@ function ServiceCard({ card }: ServiceCardProps) {
 
         <button
           aria-label={`Learn more about ${card.title}`}
+          onClick={() => onLearnMore(card.title)}
           className={`
             h-12
             w-12
@@ -97,6 +100,7 @@ export default function OurService() {
 
   const isMobile = useIsMobile();
   const [activeIndex, setActiveIndex] = useState(0);
+  const { openModal } = useServiceModal();
 
   const arc = useMemo(() => {
     const count = serviceCards.length;
@@ -194,7 +198,7 @@ export default function OurService() {
               >
                 {serviceCards.map((card, index) => (
                   <SwiperSlide key={index}>
-                    <ServiceCard card={card} />
+                    <ServiceCard card={card} onLearnMore={openModal} />
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -297,7 +301,7 @@ export default function OurService() {
                     xl:w-[19rem]
                   "
                 >
-                  <ServiceCard card={card} />
+                  <ServiceCard card={card} onLearnMore={openModal} />
                 </div>
               ))}
             </div>

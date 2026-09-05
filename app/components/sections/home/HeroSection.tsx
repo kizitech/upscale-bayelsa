@@ -4,9 +4,11 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import CircularBadge from "../../CircularBadge";
 import { useState } from "react";
 import Link from "next/link";
+import { useServiceModal } from "../../ServiceModalContext";
 
 export default function HeroSection() {
   const [isChecked, setIsChecked] = useState(false);
+  const { openModal } = useServiceModal();
 
   return (
     <>
@@ -50,7 +52,10 @@ export default function HeroSection() {
             We focus on development with the understanding of your business
           </p>
 
-          <button className="px-6 py-2 text-white bg-green-950 rounded-lg mt-10">
+          <button
+            onClick={() => openModal()}
+            className="px-6 py-2 text-white bg-green-950 rounded-lg mt-10 cursor-pointer transition-colors hover:bg-black"
+          >
             Estimate the project
           </button>
         </div>
